@@ -2,6 +2,7 @@
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import SnackbarComponent from '../common/Snackbar';
+import Cookies from "js-cookie";
 
 interface ProductAddToCartProps {
     inStock: boolean,
@@ -15,7 +16,29 @@ const ProductAddToCart = ({inStock, selectedProduct}: ProductAddToCartProps) => 
     const addToCart = (selectedProduct: SelectedProduct) => {
 
         if (selectedProduct.selectedColor && selectedProduct.selectedSize) {
-            console.log(selectedProduct)
+
+            const cartCookie = Cookies.get("cart");
+            let cart = cartCookie ? JSON.parse(cartCookie) : [];
+
+                 // Check if a product with the same productId, color, and size exists
+            const existingProduct = cart.find((product: SelectedProduct) =>
+                product.productId === selectedProduct.productId &&
+                product.selectedColor === selectedProduct.selectedColor &&
+                product.selectedSize === selectedProduct.selectedSize
+            );
+
+            if (existingProduct) {
+                // Increment the quantity if it already exists
+                existingProduct.quantity += 1;
+            } else {
+                // Otherwise, add the selected product to the cart
+                cart.push(selectedProduct);
+            }
+
+            // Save the updated cart
+            Cookies.set("cart", JSON.stringify(cart), { expires: 7 }); // Expires in 7 days
+            window.dispatchEvent(new Event("cart-updated"));
+
             setIsSnackbarOpenSuccess(true)
         } else {
             setIsSnackbarOpenError(true)

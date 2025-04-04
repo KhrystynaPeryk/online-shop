@@ -1,20 +1,15 @@
-
-
-import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import Box from '@mui/material/Box';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCart from './ShoppingCart';
 import Link from 'next/link';
 
-const ProductPageCard = ({ id, image, name, price, inStock }: Product) => {
-    // Define dimensions for consistency
+const ProductPageCard = ({ id, image, name, price, inStock, color, size }: Product) => {
     const cardWidth = 345;
     const mediaHeight = 345;
-    const circleSize = 40;
 
     return (
         <Card
@@ -23,14 +18,14 @@ const ProductPageCard = ({ id, image, name, price, inStock }: Product) => {
                 position: 'relative',
                 overflow: 'hidden',
                 transition: 'all 0.3s ease-in-out',
-                '&:hover': { transform: 'translateY(-8px)', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'},
+                '&:hover': { transform: 'translateY(-8px)', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' },
             }}
-        >   
+        >
             <Link href={`/products/${id}`}>
                 <CardActionArea
                     sx={{
                         position: 'relative',
-                        '&:hover .shoppingCartContainer': { opacity: 1 },
+                        '&:hover .shoppingCartContainer': { opacity: 1 }, // Correct way to apply hover
                     }}
                 >
                     <CardMedia
@@ -40,7 +35,7 @@ const ProductPageCard = ({ id, image, name, price, inStock }: Product) => {
                             backgroundImage: `url(${image})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
-                            margin: '10px 10px 0 10px'
+                            margin: '10px 10px 0 10px',
                         }}
                         title={name}
                     />
@@ -63,31 +58,8 @@ const ProductPageCard = ({ id, image, name, price, inStock }: Product) => {
                         </Box>
                     )}
 
-                    {/* Shopping Cart in a circle, positioned at the border between the image and the content */}
-                    {
-                        inStock && (
-                            <Box
-                            className="shoppingCartContainer"
-                            sx={{
-                                position: 'absolute',
-                                top: mediaHeight - circleSize / 2,
-                                right: 16,
-                                width: circleSize,
-                                height: circleSize,
-                                borderRadius: '50%',
-                                backgroundColor: '#8884FF',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                opacity: 0,
-                                transition: 'opacity 0.3s ease-in-out',
-                                zIndex: 3,
-                            }}
-                        >
-                            <ShoppingCartIcon sx={{ color: 'white' }} />
-                        </Box>
-                        )
-                    }
+                    {/* ShoppingCart is now a direct child of CardActionArea */}
+                    <ShoppingCart inStock={inStock} productId={id} productColor={color} productSize={size} mediaHeight={mediaHeight} />
 
                     <CardContent>
                         <Typography gutterBottom variant="h6" component="div">{name}</Typography>
