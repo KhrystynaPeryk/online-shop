@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DrawerMiniCart from "./mini-cart/DrawerMiniCart";
+import { getCart } from "@/libs/cookies";
 
 const Cart = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -14,8 +14,7 @@ const Cart = () => {
         setIsMounted(true);
         // Function to update the cart state from cookies
         const updateCart = () => {
-            const cartCookie = Cookies.get("cart");
-            const cart = cartCookie ? JSON.parse(cartCookie) : [];
+            const cart = getCart()
             setProducts(cart);
         };
 

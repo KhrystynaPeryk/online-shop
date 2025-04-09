@@ -1,8 +1,8 @@
 "use client"
 import Box from '@mui/material/Box';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Cookies from "js-cookie";
 import { v4 as uuidv4 } from 'uuid';
+import { getCart, setCart } from '@/libs/cookies';
 
 interface ShoppingCartProps {
     inStock: boolean;
@@ -18,8 +18,8 @@ const ShoppingCart = ({ productId, productColor, productSize, inStock, mediaHeig
     const addToCart = (e: React.MouseEvent) => {
         e.stopPropagation();
         e.preventDefault();
-        const cartCookie = Cookies.get("cart");
-        let cart = cartCookie ? JSON.parse(cartCookie) : [];
+
+        let cart = getCart()
 
         // Check if a product with the same productId, color, and size exists
         const existingProduct = cart.find((product: SelectedProduct) =>
@@ -44,10 +44,8 @@ const ShoppingCart = ({ productId, productColor, productSize, inStock, mediaHeig
         }
 
         // Save the updated cart
-        Cookies.set("cart", JSON.stringify(cart), { expires: 7 }); // Expires in 7 days
-        window.dispatchEvent(new Event("cart-updated"));
-
-    }
+        setCart(cart)
+}
 
     return (
         inStock && (

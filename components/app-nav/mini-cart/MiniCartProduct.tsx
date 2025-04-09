@@ -3,12 +3,16 @@ import { Box } from '@mui/material'
 import {Typography} from '@mui/material'
 import Image from 'next/image'
 import DeleteIcon from "@mui/icons-material/Delete";
+import { removeProductCart } from '@/libs/cookies';
+import SnackbarComponent from '@/components/common/Snackbar';
+import { useState } from 'react';
 
 interface MiniCartProduct {
     product: SelectedProduct
 }
 
 const MiniCartProduct = ({product}: MiniCartProduct) => {
+    const [isSnackbarOpenInfo, setIsSnackbarOpenInfo] = useState(false) 
     const filteredProduct = data.filter((item) => item.id === product.productId)
 
     if (filteredProduct.length === 0) {
@@ -16,6 +20,13 @@ const MiniCartProduct = ({product}: MiniCartProduct) => {
     }
 
     const displayedProduct = filteredProduct[0]
+
+    const removeProduct = () => {
+        setIsSnackbarOpenInfo(true);
+        setTimeout(() => {
+            removeProductCart(product.id);
+            }, 2050);
+        }
 
     return (
         <div className='p-4 font-raleway flex gap-4'>
@@ -53,7 +64,7 @@ const MiniCartProduct = ({product}: MiniCartProduct) => {
                     <Typography sx={{fontSize: 'small', fontFamily: 'inherit'}}>{product.quantity}</Typography>
             </div>
             <div className='flex flex-col justify-between items-end'>
-                <DeleteIcon sx={{ color: '#c26d6dee', cursor: 'pointer' }}/>
+                <DeleteIcon sx={{ color: '#c26d6dee', cursor: 'pointer' }} onClick={removeProduct} />
                 <Image
                     src={displayedProduct.subImages[0]}
                     alt={displayedProduct.name}
@@ -68,6 +79,7 @@ const MiniCartProduct = ({product}: MiniCartProduct) => {
                     }}
                 />
             </div>
+            <SnackbarComponent severity='info' message='Item will be removed from the cart' isSnackbarOpen={isSnackbarOpenInfo} setIsSnackbarOpen={setIsSnackbarOpenInfo} />
         </div>
     )
 }
