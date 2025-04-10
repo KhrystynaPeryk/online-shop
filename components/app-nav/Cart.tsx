@@ -6,7 +6,7 @@ import { getCart } from "@/libs/cookies";
 
 const Cart = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [products, setProducts] = useState<any[]>([]);
+    const [products, setProducts] = useState<SelectedProduct[]>([]);
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {

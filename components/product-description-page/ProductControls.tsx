@@ -53,12 +53,14 @@ export default function ProductControls({
                 tagStyle={tagStyle}
                 size={size}
                 addProductSize={handleSizeChange}
+                containerStyle="flex flex-col gap-3"
             />
 
             <ProductColor
                 tagStyle={tagStyle}
                 color={color}
                 addProductColor={handleColorChange}
+                containerStyle="flex flex-col gap-3"
             />
 
             <ProductPrice tagStyle={tagStyle} price={price}/>

@@ -1,6 +1,8 @@
+import CartPageComponent from "@/components/cart-page/CartPage"
+
 const CartPage = () => {
     return (
-        <div>CartPage</div>
+        <CartPageComponent />
     )
 }
 

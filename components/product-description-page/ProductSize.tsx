@@ -7,21 +7,22 @@ import Stack from '@mui/material/Stack';
 
 interface ProductSizeProps {
     tagStyle: {},
+    containerStyle: string,
     size: string[],
     addProductSize: (item: string) => void
+    selectedSize?: string
 }
 
-const ProductSize = ({tagStyle, size, addProductSize}: ProductSizeProps) => {
-    const [selectedSize, setSelectedSize] = useState('')
+const ProductSize = ({tagStyle, containerStyle, size, addProductSize, selectedSize}: ProductSizeProps) => {
+    const [pickedize, setPickedSize] = useState(selectedSize ? selectedSize : '')
 
     const handleClick = (item: string) => {
-        setSelectedSize(item)
+        setPickedSize(item)
         addProductSize(item)
-        console.log(`clicked on ${item}`)
     }
 
     return (
-        <>
+        <div className={containerStyle}>
             <Typography sx={tagStyle}>SIZE:</Typography>
             <Stack direction="row" spacing={1}>
                 {size.map((item) => (
@@ -34,8 +35,8 @@ const ProductSize = ({tagStyle, size, addProductSize}: ProductSizeProps) => {
                             justifyContent: 'center', 
                             alignItems: 'center', 
                             padding: '4px',
-                            backgroundColor: selectedSize === item ? 'black' : 'white',
-                            color: selectedSize === item ? 'white' : 'black',
+                            backgroundColor: pickedize === item ? 'black' : 'white',
+                            color: pickedize === item ? 'white' : 'black',
                             '&:hover': {cursor: 'pointer'}
                         }}
                         onClick={() => handleClick(item)}
@@ -44,7 +45,7 @@ const ProductSize = ({tagStyle, size, addProductSize}: ProductSizeProps) => {
                     </Box>
                 ))}
             </Stack>
-        </>
+        </div>
     )
 }
 
