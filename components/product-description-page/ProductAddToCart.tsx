@@ -2,7 +2,7 @@
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import SnackbarComponent from '../common/Snackbar';
-import { getCart, setCart } from '@/libs/cookies';
+import { addProductToCart } from '@/libs/cookies';
 
 interface ProductAddToCartProps {
     inStock: boolean,
@@ -15,24 +15,8 @@ const ProductAddToCart = ({inStock, selectedProduct}: ProductAddToCartProps) => 
 
     const addToCart = (selectedProduct: SelectedProduct) => {
         if (selectedProduct.selectedColor && selectedProduct.selectedSize) {
-            let cart = getCart()
-            // Check if a product with the same productId, color, and size exists
-            const existingProduct = cart.find((product: SelectedProduct) =>
-                product.productId === selectedProduct.productId &&
-                product.selectedColor === selectedProduct.selectedColor &&
-                product.selectedSize === selectedProduct.selectedSize
-            );
-
-            if (existingProduct) {
-                // Increment the quantity if it already exists
-                existingProduct.quantity += 1;
-            } else {
-                // Otherwise, add the selected product to the cart
-                cart.push(selectedProduct);
-            }
-
             // Save the updated cart
-            setCart(cart)
+            addProductToCart(selectedProduct)
             setIsSnackbarOpenSuccess(true)
         } else {
             setIsSnackbarOpenError(true)

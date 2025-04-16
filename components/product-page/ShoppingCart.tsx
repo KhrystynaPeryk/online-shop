@@ -2,7 +2,7 @@
 import Box from '@mui/material/Box';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { v4 as uuidv4 } from 'uuid';
-import { getCart, setCart } from '@/libs/cookies';
+import { addProductToCart } from '@/libs/cookies';
 
 interface ShoppingCartProps {
     inStock: boolean;
@@ -19,32 +19,16 @@ const ShoppingCart = ({ productId, productColor, productSize, inStock, mediaHeig
         e.stopPropagation();
         e.preventDefault();
 
-        let cart = getCart()
-
-        // Check if a product with the same productId, color, and size exists
-        const existingProduct = cart.find((product: SelectedProduct) =>
-                product.productId === productId &&
-                product.selectedColor === productColor[0] &&
-                product.selectedSize === productSize[0]
-        );
-
-        if (existingProduct) {
-                // Increment the quantity if it already exists
-                existingProduct.quantity += 1;
-        } else {
-                // Otherwise, add the selected product to the cart
-                const autoSelectedProduct: SelectedProduct = {
-                    id: uuidv4(),
-                    productId,
-                    selectedColor: productColor[0],
-                    selectedSize: productSize[0],
-                    quantity: 1
-                }
-                cart.push(autoSelectedProduct);
+        const autoSelectedProduct: SelectedProduct = {
+            id: uuidv4(),
+            productId,
+            selectedColor: productColor[0],
+            selectedSize: productSize[0],
+            quantity: 1
         }
 
         // Save the updated cart
-        setCart(cart)
+        addProductToCart(autoSelectedProduct)
 }
 
     return (

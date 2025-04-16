@@ -2,10 +2,11 @@ import { Button } from "@mui/material"
 
 interface CartPageProductControlsProps {
     areParamsChanged: boolean,
-    removeProduct: () => void
+    removeProduct: () => void,
+    updateProduct: () => void
 }
 
-const CartPageProductControls = ({areParamsChanged, removeProduct}: CartPageProductControlsProps ) => {
+const CartPageProductControls = ({areParamsChanged, removeProduct, updateProduct}: CartPageProductControlsProps ) => {
     return (
         <div>
             <Button
@@ -44,6 +45,7 @@ const CartPageProductControls = ({areParamsChanged, removeProduct}: CartPageProd
                         border: '1px solid lightgreen'
                     }
                 }}
+                onClick={updateProduct}
             >
                 Update
             </Button>

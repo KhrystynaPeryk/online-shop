@@ -3,9 +3,9 @@ import Image from 'next/image'
 import ProductSize from '../product-description-page/ProductSize'
 import ProductColor from '../product-description-page/ProductColor'
 import CartPageProductControls from './CartPageProductControls'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ProductQuantity from './ProductQuantity'
-import { removeProductCart } from '@/libs/cookies'
+import { removeProductCart, updateProductCart } from '@/libs/cookies'
 import SnackbarComponent from '../common/Snackbar'
 
 interface CartPageProductProps {
@@ -32,6 +32,14 @@ interface CartPageProductProps {
             fontSize: "small",
             padding: "0 0 3px 0",
         }
+
+            // Update local state whenever the product prop changes
+        useEffect(() => {
+            setCurrentSize(product.selectedSize)
+            setCurrentColor(product.selectedColor)
+            setCurrentQuantity(product.quantity)
+            setAreParamsChanged(false)
+        }, [product])
 
         // Helper function to check if any parameter changed compared to the original product
         const checkIfChanged = (size: string, color: string, quantity: number) => {
@@ -76,6 +84,17 @@ interface CartPageProductProps {
                 }, 2050);
             }
 
+        const updateProduct = () => {
+            if (areParamsChanged) {
+                if (currentQuantity === 0) {
+                    removeProduct()
+                } else {
+                    updateProductCart(product.id, currentSize, currentColor, currentQuantity)
+                }
+                setAreParamsChanged(false)
+            }
+        }
+
     return (
         <div className='p-4 font-raleway flex gap-4 justify-between items-center max-md:flex-col max-md:items-start lg:w-3/6'>
             <div className='flex flex-col gap-2'>
@@ -108,7 +127,7 @@ interface CartPageProductProps {
                     onIncrement={handleIncrement}
                     onDecrement={handleDecrement}
                 />
-                <CartPageProductControls areParamsChanged={areParamsChanged} removeProduct={removeProduct}/>
+                <CartPageProductControls areParamsChanged={areParamsChanged} removeProduct={removeProduct} updateProduct={updateProduct}/>
             </div>
 
             <div>
