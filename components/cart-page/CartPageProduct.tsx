@@ -96,7 +96,7 @@ interface CartPageProductProps {
         }
 
     return (
-        <div className='p-4 font-raleway flex gap-4 justify-between items-center max-md:flex-col max-md:items-start lg:w-3/6'>
+        <div className='p-4 font-raleway flex gap-4 justify-between items-center max-md:flex-col max-md:items-start'>
             <div className='flex flex-col gap-2'>
                 <h3 className='text-2xl font-bold'>{displayedProduct.name}</h3>
                 <p>${displayedProduct.price}.00</p>
@@ -130,13 +130,13 @@ interface CartPageProductProps {
                 <CartPageProductControls areParamsChanged={areParamsChanged} removeProduct={removeProduct} updateProduct={updateProduct}/>
             </div>
 
-            <div>
+            <div className='w-[400px] h-[400px] max-sm:w-[300px] max-sm:h-[300px] relative'>
                 <Image
                 src={displayedProduct.subImages[0]}
                 alt={displayedProduct.name}
-                loading="lazy"
-                width={400}
-                height={400}
+                loading='lazy'
+                fill
+                sizes="(max-width: 400px) 100vw"
                 style={{
                     objectFit: "cover",
                     objectPosition: "center",

@@ -65,17 +65,19 @@ const MiniCartProduct = ({product}: MiniCartProduct) => {
             </div>
             <div className='flex flex-col justify-between items-end'>
                 <DeleteIcon sx={{ color: '#c26d6dee', cursor: 'pointer' }} onClick={removeProduct} />
-                <Image
-                    src={displayedProduct.subImages[0]}
-                    alt={displayedProduct.name}
-                    loading="lazy"
-                    width={150}
-                    height={150}
-                    style={{
-                        objectFit: "cover",
-                        objectPosition: "center",
-                    }}
-                />
+                <div className='w-[150px] h-[150px] relative'>
+                    <Image
+                        src={displayedProduct.subImages[0]}
+                        alt={displayedProduct.name}
+                        loading="lazy"
+                        fill
+                        sizes="(max-width: 150px) 100vw"
+                        style={{
+                            objectFit: "cover",
+                            objectPosition: "center",
+                        }}
+                    />
+                </div>
             </div>
             <SnackbarComponent severity='info' message='Item will be removed from the cart' isSnackbarOpen={isSnackbarOpenInfo} setIsSnackbarOpen={setIsSnackbarOpenInfo} />
         </div>
