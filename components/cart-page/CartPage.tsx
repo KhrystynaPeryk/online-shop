@@ -42,7 +42,7 @@ const CartPageComponent = () => {
                 <p className="font-bold text-2xl">Total:</p>
                 <p className="text-2xl">${calculateTotal(products, data)}.00</p>
             </div>
-            <Button 
+            {products.length !== 0 && <Button 
                 variant="contained" 
                 sx={{
                     backgroundColor: '#8884FF', 
@@ -54,7 +54,7 @@ const CartPageComponent = () => {
                     border: "1px solid transparent",
                     '&:hover': {backgroundColor: 'white', color: '#8884FF', border: '1px solid #8884FF'}
                 }}
-            >CHECKOUT</Button>
+            >CHECKOUT</Button>}
         </div>
     )
 }
