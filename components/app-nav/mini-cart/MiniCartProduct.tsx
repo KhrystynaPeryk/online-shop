@@ -69,11 +69,9 @@ const MiniCartProduct = ({product}: MiniCartProduct) => {
                     src={displayedProduct.subImages[0]}
                     alt={displayedProduct.name}
                     loading="lazy"
-                    width={100}
-                    height={200}
+                    width={150}
+                    height={150}
                     style={{
-                        width: "100px",
-                        height: "100px",
                         objectFit: "cover",
                         objectPosition: "center",
                     }}

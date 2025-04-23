@@ -138,8 +138,6 @@ interface CartPageProductProps {
                 width={400}
                 height={400}
                 style={{
-                    width: "300px",
-                    height: "300px",
                     objectFit: "cover",
                     objectPosition: "center",
                 }}

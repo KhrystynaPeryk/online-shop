@@ -26,7 +26,7 @@ const AvatarNavbar = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto' }}>
             <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Avatar" src="/static/images/avatar/2.jpg" />
+                    <Avatar alt="Avatar" src="/vercel.svg" />
                 </IconButton>
             </Tooltip>
             <Menu
